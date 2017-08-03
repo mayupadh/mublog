@@ -17,8 +17,10 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Mayank Upadhyay - ${contextRoot}</title>
-
+<title>Mayank Upadhyay - ${contextRoot}/${title}</title>
+<script>
+	window.menu = '${title}';
+</script>
 <!-- Bootstrap Core CSS -->
 <link href="${css}/bootstrap.min.css" rel="stylesheet">
 
@@ -35,17 +37,39 @@
 </head>
 
 <body>
-
+<div class="wrapper">
+    <!-- Header -->
 	<%@include file="./shared/header.jsp" %>
- 	<%@include file="home.jsp" %>
-
+	
+	<!-- Content -->
+	<!--  <div class="content"> -->
+			<c:if  test= "${userClickHome == true}" >
+		 	<%@include file="home.jsp" %>
+		     </c:if>
+		     
+		     <c:if  test= "${userClickContactUs == true}" >
+		 	<%@include file="contact.jsp" %>
+		     </c:if> 
+		     
+		     <c:if test= "${userClickAboutUs == true}" >
+		 	<%@include file="about.jsp" %>
+		     </c:if>
+		     
+		      <c:if test= "${userClickBlogHome == true}" >
+		 	<%@include file="blogHome.jsp" %>
+		     </c:if>
+    <!--  </div> -->
+ </div>    
+    <!-- Footer -->
     <%@include file="./shared/footer.jsp" %>
-
     <!-- jQuery -->
     <script src="${js}/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="${js}/bootstrap.min.js"></script>
+    
+     <!-- Self Coded JavaScript -->
+    <script src="${js}/myapp.js"></script>
 
 </body>
 
