@@ -2,21 +2,21 @@ package com.mublog.dao;
 
 import java.util.List;
 
-import com.mublog.entity.User;
+import com.mublog.entity.Role;
 
-public interface UserDao {
+public interface RoleDao {
 
 	
 	
-	User findById(int id);
+	Role findById(int id);
     
     //User findBySSO(String sso);
      
-    void save(User user);
+    void save(Role role);
      
     //void deleteBySSO(String sso);
      
-    List<User> getUserList();
+    List<Role> getRoleList();
 
 	long getId();
 }

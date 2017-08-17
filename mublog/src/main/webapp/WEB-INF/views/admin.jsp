@@ -26,7 +26,7 @@
 	window.menu = '${title}';
 </script>
 </head>
-<body>
+<body ng-app="admin">
 	<div id="wrapper">
 		<!-- Header -->
 		<%@include file="./admin/navTop.jsp"%>
@@ -34,9 +34,13 @@
 		<%@include file="./admin/navLeftSide.jsp"%>
 		<div id="page-wrapper">
 			<div id="page-inner">
-				<c:if  test= "${showUserDetails == true}" >
+			<c:if  test= "${showUserDetails == true}" >
 		 	<%@include file="./admin/userDetails.jsp" %>
-		     </c:if>
+		    </c:if>
+		    
+		    <c:if  test= "${showRoleDetails == true}" >
+		 	<%@include file="./admin/roleDetails.jsp" %>
+		    </c:if>
 		     
 		     <c:if  test= "${showDashboardMenu == true}" >
 		 	<%@include file="./admin/dashboardContentMenu.jsp" %>
@@ -50,16 +54,12 @@
 	<!-- Left Side Menu -->
 	<%@include file="./admin/footer.jsp"%>
 
+    <%@include file="./admin/includedScripts.jsp"%>
 
-	<!-- /. WRAPPER  -->
-	<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-	<!-- JQUERY SCRIPTS -->
-	<script src="${js}/jquery-1.10.2.js"></script>
-	<!-- BOOTSTRAP SCRIPTS -->
-	<script src="${js}/bootstrap.min.js"></script>
-	<!-- CUSTOM SCRIPTS -->
-	<script src="${js}/custom.js"></script>
-
-
+    
+	
+    	<!-- /. WRAPPER  -->
+	
+	
 </body>
 </html>

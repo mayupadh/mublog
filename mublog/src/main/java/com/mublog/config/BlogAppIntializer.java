@@ -1,5 +1,7 @@
 package com.mublog.config;
 
+import javax.servlet.Filter;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class BlogAppIntializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -17,6 +19,12 @@ public class BlogAppIntializer extends AbstractAnnotationConfigDispatcherServlet
     @Override
     protected String[] getServletMappings() {
         return new String[] { "/" };
+    }
+    
+    @Override
+    protected Filter[] getServletFilters() {
+        Filter [] singleton = { new CORSFilter() };
+        return singleton;
     }
  
 }
