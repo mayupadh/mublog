@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.mublog.entity.User;
+import com.mublog.exception.InstanceNotFoundException;
 import com.mublog.service.UserService;
   
 @RestController
@@ -29,7 +30,7 @@ public class UserController {
       
     @RequestMapping(value = "/userDetails", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
-        List<User> users = userService.findAllUsers();
+        List<User> users = userService.findAll();
         if(users.isEmpty()){
             return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
@@ -41,7 +42,7 @@ public class UserController {
     //-------------------Retrieve Single User--------------------------------------------------------
       
     @RequestMapping(value = "/userDetails/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUser(@PathVariable("id") long id) {
+    public ResponseEntity<User> getUser(@PathVariable("id") long id) throws InstanceNotFoundException {
         System.out.println("Fetching User with id " + id);
         User user = userService.findById(id);
         if (user == null) {
@@ -64,7 +65,7 @@ public class UserController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
   
-        userService.saveUser(user);
+        userService.save(user);
   
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
@@ -76,7 +77,7 @@ public class UserController {
     //------------------- Update a User --------------------------------------------------------
       
     @RequestMapping(value = "/userDetails/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) throws InstanceNotFoundException {
         System.out.println("Updating User " + id);
           
         User currentUser = userService.findById(id);
@@ -93,7 +94,7 @@ public class UserController {
         //currentUser.setAddress(user.getAddress());
         currentUser.setEmailId(user.getEmailId());
         currentUser.setPassword(user.getPassword()); 
-        userService.updateUser(currentUser);
+        userService.update(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
   
@@ -102,7 +103,7 @@ public class UserController {
     //------------------- Delete a User --------------------------------------------------------
       
     @RequestMapping(value = "/userDetails/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
+    public ResponseEntity<User> deleteUser(@PathVariable("id") long id) throws InstanceNotFoundException {
         System.out.println("Fetching & Deleting User with id " + id);
   
         User user = userService.findById(id);
@@ -111,13 +112,13 @@ public class UserController {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
   
-        userService.deleteUserById(id);
+        userService.deleteById(id);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
   
       
      
-    //------------------- Delete All Users --------------------------------------------------------
+    /*//------------------- Delete All Users --------------------------------------------------------
       
     @RequestMapping(value = "/userDetails", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteAllUsers() {
@@ -125,6 +126,6 @@ public class UserController {
   
         userService.deleteAllUsers();
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-    }
+    }*/
   
 }

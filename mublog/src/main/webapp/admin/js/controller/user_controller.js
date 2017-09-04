@@ -18,7 +18,7 @@ admin.controller('UserController', ['$scope', 'User','Role', 'commonService', fu
            
           self.createUser = function(){
         	  self.user.$save(function(){
-        		  alert('Saved');
+        		  //alert('Saved');
         		  self.fetchAllUsers();
         	  });
           };

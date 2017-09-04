@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mublog.dao.RoleDao;
 import com.mublog.entity.Role;
+import com.mublog.exception.InstanceNotFoundException;
 import com.mublog.service.RoleService;
 
  
@@ -17,79 +18,49 @@ import com.mublog.service.RoleService;
 @Transactional
 public class RoleServiceImpl implements RoleService{
      
-    private static final AtomicLong counter = new AtomicLong();
-     
-    private static List<Role> roles;
-    
-    @Autowired
-    RoleDao roleDao;
-     
-   /* static{
-        roles = populateRoles();
-    }*/
- 
-    public List<Role> findAllRoles() {
-    	
-    	List<Role> roles = new ArrayList<Role>();
-        List<Role> roleList = roleDao.getRoleList();
-        
-        return roleList;
-    }
-     
-    public Role findById(long id) {
-        for(Role role : roles){
-            if(role.getId() == id){
-                return role;
-            }
-        }
-        return null;
-    }
-     
-    public Role findByName(String name) {
-    	if(roles != null){
-	        for(Role role : roles){
-	            if(role.getRoleName().equalsIgnoreCase(name)){
-	                return role;
-	            }
-	        }
-    	}
-        return null;
-    }
-     
-    public void saveRole(Role role) {
-        //role.setId(counter.incrementAndGet());
-    	System.out.println("role  -->"+role.toString());
-    	roleDao.save(role);
-    }
- 
-    public void updateRole(Role role) {
-        int index = roles.indexOf(role);
-        roleDao.save(role);
-    }
- 
-    public void deleteRoleById(long id) {
-         
-        for (Iterator<Role> iterator = roles.iterator(); iterator.hasNext(); ) {
-            Role role = (Role) iterator.next();
-            if (role.getId() == id) {
-                iterator.remove();
-            }
-        }
-    }
- 
-    public boolean isRoleExist(Role role) {
-        return findByName(role.getRoleName())!=null;
-    }
-     
-    public void deleteAllRoles(){
-        roles.clear();
-    }
- 
-   /* private static List<Role> populateRoles(){
-        List<Role> roles = new ArrayList<Role>();
-        List<Role> roleList = roleDao.getRoleList();
-        
-        return roleList;
-    }*/
- 
+	@Autowired
+	RoleDao roleDao;
+
+
+	public Role findById(Long i) throws InstanceNotFoundException {
+		return roleDao.findById(i);
+	}
+
+	public Role findByName(String roleName) throws InstanceNotFoundException {
+		return roleDao.findByName(roleName);
+	}
+
+
+	public void save(Role role) {
+		roleDao.save(role);
+	}
+
+	public void update(Role role) {
+		roleDao.update(role);
+	}
+
+	public void deleteById(Long id) throws InstanceNotFoundException {
+		roleDao.deleteById(id);
+	}
+
+	public List<Role> findAll() {
+		List<Role> roles = roleDao.findAll();
+		return roles;
+	}
+
+	/*public List<Role> findAllActive() {
+		List<Role> roles = roleDao.findAllActive();
+		return convertToDiscountApliedRoleList(roles);
+	}*/
+	
+	public boolean isRoleExist(Role role) {
+		boolean flag = false;
+		try {
+			 flag = findById(role.getId()) != null?true:false;
+		} catch (InstanceNotFoundException ex) {
+			return flag;
+		}
+		return flag;
+	}
+
 }

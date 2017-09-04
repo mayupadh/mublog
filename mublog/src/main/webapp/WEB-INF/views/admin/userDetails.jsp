@@ -132,10 +132,10 @@
 						<!-- Button -->
 						<div class="form-group">
 							<div class="col-md-4 "></div>
-							<div class="col-md-2 ">
+							<div class="col-md-4 ">
 								<div class="col-md-4">
 									<input type="submit"
-										value="{{!ctrl.user.id ? '  Add  ' : ' Update'}}"
+										value="{{!ctrl.user.id ? 'Add User' : 'Update User'}}"
 										class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
 								</div>
 								<div class="col-md-4">

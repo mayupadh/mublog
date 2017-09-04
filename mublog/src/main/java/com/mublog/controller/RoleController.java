@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.mublog.entity.Role;
+import com.mublog.exception.InstanceNotFoundException;
 import com.mublog.service.RoleService;
   
 @RestController
@@ -29,7 +30,7 @@ public class RoleController {
       
     @RequestMapping(value = "/roleDetails", method = RequestMethod.GET)
     public ResponseEntity<List<Role>> listAllRoles() {
-        List<Role> roles = roleService.findAllRoles();
+        List<Role> roles = roleService.findAll();
         if(roles.isEmpty()){
             return new ResponseEntity<List<Role>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
@@ -41,7 +42,7 @@ public class RoleController {
     //-------------------Retrieve Single Role--------------------------------------------------------
       
     @RequestMapping(value = "/roleDetails/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Role> getRole(@PathVariable("id") long id) {
+    public ResponseEntity<Role> getRole(@PathVariable("id") long id) throws InstanceNotFoundException {
         System.out.println("Fetching Role with id " + id);
         Role role = roleService.findById(id);
         if (role == null) {
@@ -64,7 +65,7 @@ public class RoleController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
   
-        roleService.saveRole(role);
+        roleService.save(role);
   
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/role/{id}").buildAndExpand(role.getId()).toUri());
@@ -76,7 +77,7 @@ public class RoleController {
     //------------------- Update a Role --------------------------------------------------------
       
     @RequestMapping(value = "/roleDetails/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Role> updateRole(@PathVariable("id") long id, @RequestBody Role role) {
+    public ResponseEntity<Role> updateRole(@PathVariable("id") long id, @RequestBody Role role) throws InstanceNotFoundException {
         System.out.println("Updating Role " + id);
           
         Role currentRole = roleService.findById(id);
@@ -88,7 +89,7 @@ public class RoleController {
   
         currentRole.setRoleName(role.getRoleName());
      
-        roleService.updateRole(currentRole);
+        roleService.update(currentRole);
         return new ResponseEntity<Role>(currentRole, HttpStatus.OK);
     }
   
@@ -97,7 +98,7 @@ public class RoleController {
     //------------------- Delete a Role --------------------------------------------------------
       
     @RequestMapping(value = "/roleDetails/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Role> deleteRole(@PathVariable("id") long id) {
+    public ResponseEntity<Role> deleteRole(@PathVariable("id") long id) throws InstanceNotFoundException {
         System.out.println("Fetching & Deleting Role with id " + id);
   
         Role role = roleService.findById(id);
@@ -106,7 +107,7 @@ public class RoleController {
             return new ResponseEntity<Role>(HttpStatus.NOT_FOUND);
         }
   
-        roleService.deleteRoleById(id);
+        roleService.deleteById(id);
         return new ResponseEntity<Role>(HttpStatus.NO_CONTENT);
     }
   
@@ -114,12 +115,12 @@ public class RoleController {
      
     //------------------- Delete All Roles --------------------------------------------------------
       
-    @RequestMapping(value = "/roleDetails", method = RequestMethod.DELETE)
+   /* @RequestMapping(value = "/roleDetails", method = RequestMethod.DELETE)
     public ResponseEntity<Role> deleteAllRoles() {
         System.out.println("Deleting All Roles");
   
         roleService.deleteAllRoles();
         return new ResponseEntity<Role>(HttpStatus.NO_CONTENT);
-    }
+    }*/
   
 }

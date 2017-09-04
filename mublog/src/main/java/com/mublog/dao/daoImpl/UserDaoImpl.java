@@ -2,9 +2,8 @@ package com.mublog.dao.daoImpl;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.criterion.Order;
+import javax.persistence.NoResultException;
+import com.mublog.exception.InstanceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -14,59 +13,55 @@ import com.mublog.dao.UserDao;
 import com.mublog.entity.User;
 
 @Repository
-public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
+public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
  
     static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
-     
-    public User findById(int id) {
-        User user = getByKey(id);
-        if(user!=null){
-            Hibernate.initialize(user.getUserProfiles());
-        }
-        return user;
-    }
- 
-    /*public User findBySSO(String sso) {
-        logger.info("SSO : {}", sso);
-        Criteria crit = createEntityCriteria();
-        crit.add(Restrictions.eq("ssoId", sso));
-        User user = (User)crit.uniqueResult();
-        if(user!=null){
-            Hibernate.initialize(user.getUserProfiles());
-        }
-        return user;
-    }*/
- 
-    @SuppressWarnings("unchecked")
-    public List<User> getUserList() {
-        Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-        List<User> users = (List<User>) criteria.list();
-         
-        // No need to fetch userProfiles since we are not showing them on list page. Let them lazy load. 
-        // Uncomment below lines for eagerly fetching of userProfiles if you want.
-        /*
-        for(User user : users){
-            Hibernate.initialize(user.getUserProfiles());
-        }*/
-        return users;
-    }
- 
-    public void save(User user) {
-        persist(user);
-    }
+    
+	public User findById(Long id) throws InstanceNotFoundException {
+		try {
+			User user = (User) getCurrentSession().createQuery("SELECT u FROM User u WHERE u.id LIKE :id")
+					.setParameter("id", id).uniqueResult();
 
-	@Override
-	public long getId() {
-		// TODO Auto-generated method stub
-		return 0;
+			if (user == null) {
+				throw new InstanceNotFoundException("User not found for id:" + id);
+			}
+			return user;
+		} catch (Exception e) {
+			throw new InstanceNotFoundException("User not found for id:" + id);
+		}
 	}
- 
-    /*public void deleteBySSO(String sso) {
-        Criteria crit = createEntityCriteria();
-        crit.add(Restrictions.eq("ssoId", sso));
-        User user = (User)crit.uniqueResult();
-        delete(user);
-    }*/
 
+	public User findByName(String userName) throws InstanceNotFoundException {
+		try {
+			User user = (User) getCurrentSession().createQuery("SELECT u FROM User u WHERE u.userName LIKE :userName")
+					.setParameter("userName", userName).uniqueResult();
+
+			return user;
+		} catch (NoResultException ex) {
+			throw new InstanceNotFoundException(ex);
+		}
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	public List<User> findAll() {
+		List<User> users = getCurrentSession().createQuery("FROM User i ORDER BY i.id asc").list();
+		return users;
+	}
+
+
+	public void deleteById(Long id) throws InstanceNotFoundException {
+		try {
+			User user = (User) getCurrentSession().createQuery("SELECT u FROM User u WHERE u.id LIKE :id")
+					.setParameter("id", id).uniqueResult();
+			delete(user);
+		} catch (NoResultException ex) {
+			throw new InstanceNotFoundException(ex);
+		}
+	}
+
+
+
+	
+     
 }

@@ -16,4 +16,11 @@ admin.service('commonService', ['$http',function($http) {
 			callback(data);
 		})
 	};
+	
+	this.roleDetails = function(callback){
+		return $http.post("/mublog/articleCategoryDetails")
+		.success(function(data){
+			callback(data);
+		})
+	};
 }]);

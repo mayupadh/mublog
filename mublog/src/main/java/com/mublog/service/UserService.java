@@ -3,26 +3,31 @@ import java.util.List;
 
 import com.mublog.dao.UserDao;
 import com.mublog.entity.User;
+import com.mublog.exception.InstanceNotFoundException;
 
  
  
  
 public interface UserService {
      
-    User findById(long id);
+	User findById(Long id) throws InstanceNotFoundException;
+	
+	User findByName (String userName) throws InstanceNotFoundException;
+	    
+    void save(User user);
+    
+    void update(User user);
+    
+    void deleteById(Long id) throws InstanceNotFoundException;
      
-    User findByName(String name);
+    List<User> findAll();
+    
+    //List<User> findAllActive();
      
-    void saveUser(User user);
-     
-    void updateUser(User user);
-     
-    void deleteUserById(long id);
- 
-    List<User> findAllUsers(); 
-     
-    void deleteAllUsers();
-     
-    public boolean isUserExist(User user);
+    //List<User> findUsersByUserType(String userType);
+    
+    //List<User> findUsersByUserTypeActive(String userType);
+    
+    boolean isUserExist(User user);
      
 }

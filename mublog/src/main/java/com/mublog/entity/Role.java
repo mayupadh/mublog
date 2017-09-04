@@ -1,5 +1,7 @@
 package com.mublog.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,13 +15,19 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name="roles")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Role {
+public class Role implements Serializable {
 
 	 /*
 	  * private fields
 	  */
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	@Override
 	public String toString() {
 		return "Role [id=" + id + ", roleName=" + roleName + "]";
@@ -27,16 +35,16 @@ public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
+	Long id;
 	
 	@Column(name = "RoleName")
 	String roleName;
 	
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getRoleName() {
@@ -45,10 +53,6 @@ public class Role {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
-	
-	public Object getRoleProfiles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 }

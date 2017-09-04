@@ -16,4 +16,6 @@
 	<script src="${js}/service/user_service.js" type="text/javascript"></script>
 	<script src="${js}/controller/role_controller.js" type="text/javascript"></script>
 	<script src="${js}/service/role_service.js" type="text/javascript"></script>
+	<script src="${js}/controller/articleCategory_controller.js" type="text/javascript"></script>
+	<script src="${js}/service/articleCategory_service.js" type="text/javascript"></script>
     <script src="${js}/service/common_service.js" type="text/javascript"></script>

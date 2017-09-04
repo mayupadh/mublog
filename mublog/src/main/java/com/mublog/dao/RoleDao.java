@@ -4,19 +4,22 @@ import java.util.List;
 
 import com.mublog.entity.Role;
 
+import com.mublog.exception.InstanceNotFoundException;
+
 public interface RoleDao {
 
 	
-	
-	Role findById(int id);
+    Role findById(Long id) throws InstanceNotFoundException;
     
-    //User findBySSO(String sso);
-     
+    Role findByName (String roleName) throws InstanceNotFoundException;
+    
     void save(Role role);
+    
+    void update(Role role);
+    
+    void deleteById(Long id) throws InstanceNotFoundException;
      
-    //void deleteBySSO(String sso);
-     
-    List<Role> getRoleList();
+    List<Role> findAll();
+	
 
-	long getId();
 }

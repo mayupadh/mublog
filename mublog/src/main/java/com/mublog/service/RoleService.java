@@ -2,26 +2,28 @@ package com.mublog.service;
 import java.util.List;
 
 import com.mublog.entity.Role;
+import com.mublog.exception.InstanceNotFoundException;
 
  
  
  
 public interface RoleService {
      
-    Role findById(long id);
+	Role findById(Long id) throws InstanceNotFoundException;
+	
+	Role findByName (String roleName) throws InstanceNotFoundException;
+	    
+    void save(Role role);
+    
+    void update(Role role);
+    
+    void deleteById(Long id) throws InstanceNotFoundException;
      
-    Role findByName(String name);
+    List<Role> findAll();
+    
+    //List<Role> findAllActive();
      
-    void saveRole(Role role);
-     
-    void updateRole(Role role);
-     
-    void deleteRoleById(long id);
- 
-    List<Role> findAllRoles(); 
-     
-    void deleteAllRoles();
-     
-    public boolean isRoleExist(Role role);
+  
+    boolean isRoleExist(Role role);
      
 }

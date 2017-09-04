@@ -2,21 +2,24 @@ package com.mublog.dao;
 
 import java.util.List;
 
+import com.mublog.exception.InstanceNotFoundException;
+
 import com.mublog.entity.User;
 
 public interface UserDao {
 
 	
-	
-	User findById(int id);
+    User findById(Long id) throws InstanceNotFoundException;
     
-    //User findBySSO(String sso);
-     
+    User findByName (String userName) throws InstanceNotFoundException;
+    
     void save(User user);
+    
+    void update(User user);
+    
+    void deleteById(Long id) throws InstanceNotFoundException;
      
-    //void deleteBySSO(String sso);
-     
-    List<User> getUserList();
-
-	long getId();
+    List<User> findAll();
+    
+    //List<User> findAllActive();
 }

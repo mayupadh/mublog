@@ -12,7 +12,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Simple Responsive Admin</title>
+<title>${title}</title>
 <!-- BOOTSTRAP STYLES-->
 <link href="${css}/bootstrap.css" rel="stylesheet" />
 <!-- FONTAWESOME STYLES-->
@@ -44,6 +44,10 @@
 		     
 		     <c:if  test= "${showDashboardMenu == true}" >
 		 	<%@include file="./admin/dashboardContentMenu.jsp" %>
+		     </c:if> 
+		     	     
+		     <c:if  test= "${showArticleCategoriesDetails == true}" >
+		 		<%@include file="./admin/articleCategoryDetails.jsp" %>
 		     </c:if> 
 			</div>
 			<!-- /. PAGE INNER  -->
