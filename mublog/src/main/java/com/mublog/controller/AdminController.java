@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mublog.dao.UserDao;
+import com.mublog.entity.Article;
 import com.mublog.entity.ArticleCategory;
 import com.mublog.entity.Role;
 import com.mublog.entity.User;
 import com.mublog.service.ArticleCategoryService;
+import com.mublog.service.ArticleService;
 import com.mublog.service.RoleService;
 import com.mublog.service.UserService;
 
@@ -26,6 +28,8 @@ public class AdminController {
 	RoleService roleService;
 	@Autowired
 	ArticleCategoryService articleCategoryService;
+	@Autowired
+	ArticleService articleService;
 	
 	@RequestMapping(value= "/user")
 	public ModelAndView userDetails()
@@ -68,6 +72,18 @@ public class AdminController {
 		ModelAndView mvObj = new ModelAndView("admin");
 				mvObj.addObject("title","Dashboard");
 				mvObj.addObject("showDashboardMenu",true);
+				return mvObj;
+	}
+
+	
+	@RequestMapping(value= "/article")
+	public ModelAndView articleDetails()
+	{
+		ModelAndView mvObj = new ModelAndView("admin");
+				mvObj.addObject("title","Article Details");
+				List<Article> articles = articleService.findAll();
+				mvObj.addObject("articleList",articles);
+				mvObj.addObject("showArticleDetails",true);
 				return mvObj;
 	}
 }

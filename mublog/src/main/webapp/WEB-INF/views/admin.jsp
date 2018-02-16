@@ -48,6 +48,9 @@
 		     	     
 		     <c:if  test= "${showArticleCategoriesDetails == true}" >
 		 		<%@include file="./admin/articleCategoryDetails.jsp" %>
+		     </c:if>
+		       <c:if  test= "${showArticleDetails == true}" >
+		 		<%@include file="./admin/articleDetails.jsp" %>
 		     </c:if> 
 			</div>
 			<!-- /. PAGE INNER  -->
