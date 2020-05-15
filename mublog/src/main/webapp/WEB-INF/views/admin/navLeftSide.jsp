@@ -3,11 +3,15 @@
 		<ul class="nav" id="main-menu">
 			<li class="active-link"><a href="index.html"><i
 					class="fa fa-desktop "></i>Dashboard</a></li>
-			<li><a href="#"><i class="fa fa-users"></i> User Management</a>
+			<li class="collapse"><a href="#"><i class="fa fa-users"></i> User Management</a>
 				<ul>
 					<li><a href="${contextRoot}/role"><i
 							class="fa fa-user-circle"></i> Role</a></li>
 					<li><a href="${contextRoot}/user"><i class="fa fa-user-o"></i> User</a></li>
+				</ul></li>
+				<li><a href=""><i class="fa fa-newspaper-o "></i> Article Management</a>
+				<ul>
+					<li><a href="${contextRoot}/menu"><i class="fa fa-tags"></i> Menu Master</a></li>
 				</ul></li>
 			<li><a href=""><i class="fa fa-newspaper-o "></i> Article Management</a>
 				<ul>

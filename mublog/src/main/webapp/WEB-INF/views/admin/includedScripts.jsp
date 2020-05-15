@@ -20,4 +20,8 @@
 	<script src="${js}/service/articleCategory_service.js" type="text/javascript"></script>
 	<script src="${js}/controller/article_controller.js" type="text/javascript"></script>
 	<script src="${js}/service/article_service.js" type="text/javascript"></script>
+	<script src="${js}/controller/menu_controller.js" type="text/javascript"></script>
+	<script src="${js}/service/menu_service.js" type="text/javascript"></script>
     <script src="${js}/service/common_service.js" type="text/javascript"></script>
+    <script src="${js}/directive/appdirective.js"></script>
+	<script src="${js}/directive/filebrowserDirective.js"></script>

@@ -41,6 +41,10 @@
 		    <c:if  test= "${showRoleDetails == true}" >
 		 	<%@include file="./admin/roleDetails.jsp" %>
 		    </c:if>
+		    
+		     <c:if  test= "${menuDetails == true}" >
+		 	<%@include file="./admin/menuDetails.jsp" %>
+		    </c:if>
 		     
 		     <c:if  test= "${showDashboardMenu == true}" >
 		 	<%@include file="./admin/dashboardContentMenu.jsp" %>
